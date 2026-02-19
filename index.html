@@ -42,7 +42,7 @@
   </script>
   <style>
     * { font-family: 'Space Grotesk', sans-serif; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overscroll-behavior: none; }
 
     /* Modern scrollbar */
     ::-webkit-scrollbar { width: 6px; }
@@ -50,8 +50,8 @@
     ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
 
     .nav-blur {
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .text-outline {
@@ -65,14 +65,6 @@
 
     .grain {
       position: relative;
-    }
-    .grain::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      pointer-events: none;
     }
 
     /* Reveal animations */
@@ -208,7 +200,7 @@
   </style>
 </head>
 
-<body class="bg-white text-black overflow-x-hidden">
+<body class="bg-black text-black overflow-x-hidden">
 
   <!-- ========== NAVBAR ========== -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
@@ -353,7 +345,7 @@
             <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&h=1000&fit=crop&q=80" alt="IBN Juara" class="w-full h-full object-cover">
           </div>
           <div class="absolute -bottom-6 -right-6 bg-black text-white rounded-2xl p-6 shadow-2xl max-w-[200px]">
-            <span class="font-heading text-4xl font-bold block">25+</span>
+            <span class="font-heading text-4xl font-bold block">18</span>
             <span class="text-white/50 text-sm mt-1 block">Anos transformando vidas em Juara</span>
           </div>
         </div>
@@ -787,7 +779,7 @@
 
         <!-- Info -->
         <div class="reveal reveal-delay-2">
-          <div class="bg-black text-white rounded-3xl p-10 lg:p-14">
+          <div class="bg-black text-white rounded-3xl p-7 lg:p-10">
             <h3 class="font-heading text-3xl font-bold mb-10">Informações</h3>
 
             <div class="space-y-8">
@@ -915,24 +907,32 @@
 
   <!-- ========== SCRIPTS ========== -->
   <script>
-    // Navbar scroll
+    // Navbar scroll (throttled)
     const navbar = document.getElementById('navbar');
     const btt = document.getElementById('backToTop');
+    let ticking = false;
 
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 80) {
-        navbar.classList.add('nav-blur', 'bg-black/80');
-      } else {
-        navbar.classList.remove('nav-blur', 'bg-black/80');
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          if (y > 80) {
+            navbar.classList.add('nav-blur', 'bg-black/80');
+          } else {
+            navbar.classList.remove('nav-blur', 'bg-black/80');
+          }
+          if (y > 500) {
+            btt.style.opacity = '1';
+            btt.style.transform = 'translateY(0)';
+          } else {
+            btt.style.opacity = '0';
+            btt.style.transform = 'translateY(1rem)';
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
-      if (window.scrollY > 500) {
-        btt.style.opacity = '1';
-        btt.style.transform = 'translateY(0)';
-      } else {
-        btt.style.opacity = '0';
-        btt.style.transform = 'translateY(1rem)';
-      }
-    });
+    }, { passive: true });
 
     // Mobile menu
     function toggleMenu() {
