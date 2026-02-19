@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBN Juara - Igreja Batista Nacional</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Sora', 'sans-serif'],
+            body: ['Space Grotesk', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    * { font-family: 'Space Grotesk', sans-serif; }
+    html { scroll-behavior: smooth; }
+
+    /* Modern scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+
+    .nav-blur {
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+    }
+
+    .text-outline {
+      -webkit-text-stroke: 1.5px white;
+      color: transparent;
+    }
+
+    .hero-img {
+      background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80&fit=crop') center/cover no-repeat;
+    }
+
+    .grain {
+      position: relative;
+    }
+    .grain::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* Hover lift */
+    .hover-lift {
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hover-lift:hover {
+      transform: translateY(-6px);
+    }
+
+    /* Image zoom */
+    .img-zoom img {
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .img-zoom:hover img {
+      transform: scale(1.07);
+    }
+
+    /* Marquee */
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track {
+      animation: marquee 30s linear infinite;
+    }
+
+    /* Magnetic button */
+    .btn-modern {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-modern::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: white;
+      transform: translateY(101%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-modern:hover::before {
+      transform: translateY(0);
+    }
+    .btn-modern span {
+      position: relative;
+      z-index: 1;
+      transition: color 0.4s ease;
+    }
+    .btn-modern:hover span {
+      color: black;
+    }
+
+    .btn-dark {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-dark::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: black;
+      transform: translateY(101%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-dark:hover::before {
+      transform: translateY(0);
+    }
+    .btn-dark span {
+      position: relative;
+      z-index: 1;
+      transition: color 0.4s ease;
+    }
+    .btn-dark:hover span {
+      color: white;
+    }
+
+    /* Line grow */
+    .line-grow {
+      width: 0;
+      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .line-grow.active {
+      width: 60px;
+    }
+
+    /* Mobile menu */
+    .mobile-overlay {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .mobile-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-panel {
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-panel.open {
+      transform: translateX(0);
+    }
+
+    /* Counter animation */
+    .counter {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Custom cursor dot for interactive elements */
+    .cursor-dot {
+      transition: transform 0.2s ease;
+    }
+    .cursor-dot:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body class="bg-white text-black overflow-x-hidden">
+
+  <!-- ========== NAVBAR ========== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="flex items-center justify-between h-20 lg:h-24">
+        <!-- Logo -->
+        <a href="#inicio" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 border-2 border-white rounded-lg flex items-center justify-center group-hover:bg-white transition-all duration-300">
+            <svg class="w-5 h-5 text-white group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M11 2v4H9v2h2v3H7v2h4v9h2v-9h4v-2h-4V8h2V6h-2V2h-2z"/>
+            </svg>
+          </div>
+          <div>
+            <span class="font-heading font-bold text-white text-xl tracking-tight">IBN JUARA</span>
+          </div>
+        </a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden lg:flex items-center gap-10">
+          <a href="#inicio" class="text-white/70 hover:text-white text-[13px] font-medium tracking-wide uppercase transition-colors duration-300">Início</a>
+          <a href="#sobre" class="text-white/70 hover:text-white text-[13px] font-medium tracking-wide uppercase transition-colors duration-300">Sobre</a>
+          <a href="#cultos" class="text-white/70 hover:text-white text-[13px] font-medium tracking-wide uppercase transition-colors duration-300">Cultos</a>
+          <a href="#ministerios" class="text-white/70 hover:text-white text-[13px] font-medium tracking-wide uppercase transition-colors duration-300">Ministérios</a>
+          <a href="#contato" class="btn-modern border border-white text-white px-7 py-3 rounded-full text-[13px] font-semibold tracking-wide uppercase">
+            <span>Visite-nos</span>
+          </a>
+        </div>
+
+        <!-- Mobile Button -->
+        <button onclick="toggleMenu()" class="lg:hidden text-white w-10 h-10 flex items-center justify-center">
+          <div class="space-y-1.5" id="hamburger">
+            <span class="block w-6 h-[2px] bg-white transition-all duration-300 origin-center"></span>
+            <span class="block w-6 h-[2px] bg-white transition-all duration-300"></span>
+            <span class="block w-4 h-[2px] bg-white transition-all duration-300 origin-center"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobileOverlay" class="mobile-overlay fixed inset-0 bg-black/60 z-[60] lg:hidden" onclick="toggleMenu()"></div>
+  <div id="mobilePanel" class="mobile-panel fixed top-0 right-0 w-full sm:w-96 h-full bg-black z-[70] lg:hidden">
+    <div class="p-8 h-full flex flex-col">
+      <div class="flex justify-between items-center mb-16">
+        <span class="font-heading font-bold text-white text-lg tracking-tight">IBN JUARA</span>
+        <button onclick="toggleMenu()" class="text-white w-10 h-10 flex items-center justify-center">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="flex flex-col gap-1 flex-1">
+        <a href="#inicio" onclick="toggleMenu()" class="text-white/60 hover:text-white text-3xl font-heading font-light py-3 border-b border-white/10 transition-colors">Início</a>
+        <a href="#sobre" onclick="toggleMenu()" class="text-white/60 hover:text-white text-3xl font-heading font-light py-3 border-b border-white/10 transition-colors">Sobre</a>
+        <a href="#cultos" onclick="toggleMenu()" class="text-white/60 hover:text-white text-3xl font-heading font-light py-3 border-b border-white/10 transition-colors">Cultos</a>
+        <a href="#ministerios" onclick="toggleMenu()" class="text-white/60 hover:text-white text-3xl font-heading font-light py-3 border-b border-white/10 transition-colors">Ministérios</a>
+        <a href="#contato" onclick="toggleMenu()" class="text-white/60 hover:text-white text-3xl font-heading font-light py-3 border-b border-white/10 transition-colors">Contato</a>
+      </div>
+      <div class="text-white/30 text-sm">
+        <p>Rua Aracaju, 657N — Centro, Juara - MT</p>
+        <p class="mt-1">ibnjuaramt@gmail.com</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== HERO ========== -->
+  <section id="inicio" class="relative min-h-screen flex items-end bg-black grain">
+    <div class="absolute inset-0 hero-img opacity-40"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20"></div>
+
+    <div class="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-10 pb-16 lg:pb-24 pt-32">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+        <div class="lg:col-span-9">
+          <div class="reveal">
+            <div class="flex items-center gap-4 mb-8">
+              <div class="w-12 h-[2px] bg-white/50"></div>
+              <span class="text-white/50 text-[12px] tracking-[0.3em] uppercase font-medium">Igreja Batista Nacional</span>
+            </div>
+          </div>
+
+          <h1 class="font-heading text-[clamp(2.5rem,6vw,5.5rem)] font-bold text-white leading-[0.9] tracking-tight reveal reveal-delay-1">
+            ONDE A FÉ<br>
+            <span class="text-outline">TRANSFORMA</span><br>
+            VIDAS.
+          </h1>
+
+          <div class="flex flex-wrap gap-4 mt-12 reveal reveal-delay-2">
+            <a href="#cultos" class="btn-modern border border-white text-white px-10 py-4 rounded-full text-sm font-semibold tracking-wider uppercase">
+              <span class="flex items-center gap-3">
+                Nossos cultos
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </span>
+            </a>
+            <a href="#sobre" class="text-white/50 hover:text-white px-8 py-4 text-sm font-medium tracking-wider uppercase transition-colors duration-300">
+              Conheça-nos
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-3 reveal reveal-delay-3">
+          <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
+            <p class="text-white/60 text-sm leading-relaxed">
+              Nossa visão é ver todas as pessoas de Juara vivendo os propósitos de Deus.
+            </p>
+            <span class="text-white/30 text-xs mt-3 block font-medium tracking-wide">— IBN Juara</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+      <span class="text-white text-[10px] tracking-[0.3em] uppercase">Scroll</span>
+      <div class="w-[1px] h-8 bg-gradient-to-b from-white to-transparent animate-pulse"></div>
+    </div>
+  </section>
+
+  <!-- ========== MARQUEE ========== -->
+  <section class="bg-black py-5 border-y border-white/10 overflow-hidden">
+    <div class="marquee-track flex items-center gap-12 whitespace-nowrap w-max">
+      <span class="text-white text-sm tracking-[0.3em] uppercase font-medium flex items-center gap-12">
+        <span>Celebração Domingo 18h30</span> <span class="text-white/40">&#9679;</span>
+        <span>Cursos Terça 19h30</span> <span class="text-white/40">&#9679;</span>
+        <span>Pequenos Grupos Quinta 19h30</span> <span class="text-white/40">&#9679;</span>
+        <span>IBN Teens Sábado 19h</span> <span class="text-white/40">&#9679;</span>
+        <span>IBN Juara — Venha nos visitar</span> <span class="text-white/40">&#9679;</span>
+        <span>Celebração Domingo 18h30</span> <span class="text-white/40">&#9679;</span>
+        <span>Cursos Terça 19h30</span> <span class="text-white/40">&#9679;</span>
+        <span>Pequenos Grupos Quinta 19h30</span> <span class="text-white/40">&#9679;</span>
+        <span>IBN Teens Sábado 19h</span> <span class="text-white/40">&#9679;</span>
+        <span>IBN Juara — Venha nos visitar</span> <span class="text-white/40">&#9679;</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- ========== SOBRE ========== -->
+  <section id="sobre" class="py-24 lg:py-32 bg-white">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <!-- Images -->
+        <div class="relative reveal">
+          <div class="aspect-[4/5] rounded-3xl overflow-hidden img-zoom">
+            <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&h=1000&fit=crop&q=80" alt="IBN Juara" class="w-full h-full object-cover">
+          </div>
+          <div class="absolute -bottom-6 -right-6 bg-black text-white rounded-2xl p-6 shadow-2xl max-w-[200px]">
+            <span class="font-heading text-4xl font-bold block">25+</span>
+            <span class="text-white/50 text-sm mt-1 block">Anos transformando vidas em Juara</span>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div>
+          <div class="reveal">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-10 h-[2px] bg-black/30"></div>
+              <span class="text-black/40 text-[12px] tracking-[0.3em] uppercase font-medium">Quem somos</span>
+            </div>
+            <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05]">
+              Uma igreja<br>para <span class="text-outline" style="-webkit-text-stroke-color: black;">todos.</span>
+            </h2>
+          </div>
+
+          <div class="space-y-4 text-black/60 text-base leading-relaxed mt-8 reveal reveal-delay-1">
+            <p>
+              A Igreja Batista Nacional de Juara é uma igreja cristocêntrica, firmada na Palavra
+              e comprometida com o evangelho de Jesus Cristo. Somos afiliados à Convenção Batista Nacional (CBN).
+            </p>
+            <p>
+              Nossa visão é ver todas as pessoas de Juara vivendo os propósitos de Deus, e nossa
+              missão é ajudar cada pessoa a encontrar e viver esses propósitos.
+            </p>
+          </div>
+
+
+          <a href="#contato" class="inline-flex items-center gap-3 mt-10 text-sm font-semibold tracking-wider uppercase group reveal reveal-delay-3">
+            Conheça nossa história
+            <svg class="w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MISSÃO / VISÃO / VALORES ========== -->
+  <section class="py-24 lg:py-32 bg-black text-white grain">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="text-center mb-20 reveal">
+        <span class="text-white/30 text-[12px] tracking-[0.3em] uppercase font-medium">O que nos move</span>
+        <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-4">
+          Nosso propósito
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-white/10 rounded-3xl overflow-hidden">
+        <div class="bg-black p-10 lg:p-14 hover:bg-white/5 transition-colors duration-500 reveal reveal-delay-1">
+          <span class="text-white/20 font-heading text-7xl font-bold block mb-6">01</span>
+          <h3 class="font-heading text-2xl font-bold mb-4">Missão</h3>
+          <p class="text-white/50 leading-relaxed">
+            Ajudar as pessoas a encontrar e viver os propósitos de Deus, formando discípulos
+            comprometidos com o evangelho de Jesus Cristo.
+          </p>
+        </div>
+        <div class="bg-black p-10 lg:p-14 hover:bg-white/5 transition-colors duration-500 reveal reveal-delay-2">
+          <span class="text-white/20 font-heading text-7xl font-bold block mb-6">02</span>
+          <h3 class="font-heading text-2xl font-bold mb-4">Visão</h3>
+          <p class="text-white/50 leading-relaxed">
+            Ver todas as pessoas de Juara vivendo os propósitos de Deus, alcançando vidas
+            e formando uma geração comprometida com o Reino.
+          </p>
+        </div>
+        <div class="bg-black p-10 lg:p-14 hover:bg-white/5 transition-colors duration-500 reveal reveal-delay-3">
+          <span class="text-white/20 font-heading text-7xl font-bold block mb-6">03</span>
+          <h3 class="font-heading text-2xl font-bold mb-4">Valores</h3>
+          <p class="text-white/50 leading-relaxed">
+            Adoração genuína, discipulado constante, comunhão entre irmãos, evangelismo
+            intencional e serviço cristão.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CULTOS ========== -->
+  <section id="cultos" class="py-24 lg:py-32 bg-white">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 gap-6">
+        <div class="reveal">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-[2px] bg-black/30"></div>
+            <span class="text-black/40 text-[12px] tracking-[0.3em] uppercase font-medium">Programação</span>
+          </div>
+          <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Nossos cultos</h2>
+        </div>
+        <p class="text-black/50 max-w-md text-base reveal reveal-delay-1">
+          Cada culto é uma oportunidade de encontro com Deus. Venha com sua família.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Card 1 -->
+        <div class="hover-lift group border border-black/10 rounded-2xl overflow-hidden reveal reveal-delay-1">
+          <div class="bg-black text-white p-8 text-center group-hover:bg-black/90 transition-colors">
+            <span class="text-white/40 text-[11px] tracking-[0.3em] uppercase font-medium block">Domingo</span>
+            <span class="font-heading text-5xl font-bold block mt-2">18:30</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading text-lg font-bold mb-2">Culto de Celebração</h3>
+            <p class="text-black/50 text-sm leading-relaxed">Momento de louvor, adoração e pregação da Palavra. O Culto Kids acontece simultaneamente para as crianças.</p>
+            <div class="mt-5 pt-5 border-t border-black/5 flex items-center gap-2 text-black/30 text-xs font-medium tracking-wider uppercase">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>
+              Culto + Culto Kids
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="hover-lift group border border-black/10 rounded-2xl overflow-hidden reveal reveal-delay-2">
+          <div class="bg-black text-white p-8 text-center group-hover:bg-black/90 transition-colors">
+            <span class="text-white/40 text-[11px] tracking-[0.3em] uppercase font-medium block">Terça-feira</span>
+            <span class="font-heading text-5xl font-bold block mt-2">19:30</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading text-lg font-bold mb-2">Cursos</h3>
+            <p class="text-black/50 text-sm leading-relaxed">Cursos para toda a família com temas relevantes para o crescimento espiritual e vida cristã.</p>
+            <div class="mt-5 pt-5 border-t border-black/5 flex items-center gap-2 text-black/30 text-xs font-medium tracking-wider uppercase">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              Toda a família
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="hover-lift group border border-black/10 rounded-2xl overflow-hidden reveal reveal-delay-3">
+          <div class="bg-black text-white p-8 text-center group-hover:bg-black/90 transition-colors">
+            <span class="text-white/40 text-[11px] tracking-[0.3em] uppercase font-medium block">Quinta-feira</span>
+            <span class="font-heading text-5xl font-bold block mt-2">19:30</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading text-lg font-bold mb-2">Pequenos Grupos</h3>
+            <p class="text-black/50 text-sm leading-relaxed">Encontros nas casas de anfitriões em diversos bairros. Estudo bíblico, oração e comunhão em um ambiente acolhedor.</p>
+            <div class="mt-5 pt-5 border-t border-black/5 flex items-center gap-2 text-black/30 text-xs font-medium tracking-wider uppercase">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              Diversos bairros
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="hover-lift group border border-black/10 rounded-2xl overflow-hidden reveal reveal-delay-4">
+          <div class="bg-black text-white p-8 text-center group-hover:bg-black/90 transition-colors">
+            <span class="text-white/40 text-[11px] tracking-[0.3em] uppercase font-medium block">Sábado</span>
+            <span class="font-heading text-5xl font-bold block mt-2">19h</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading text-lg font-bold mb-2">IBN Teens</h3>
+            <p class="text-black/50 text-sm leading-relaxed">Encontro vibrante para jovens e adolescentes com louvor, comunhão e ensino bíblico relevante.</p>
+            <div class="mt-5 pt-5 border-t border-black/5 flex items-center gap-2 text-black/30 text-xs font-medium tracking-wider uppercase">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              Jovens e Adolescentes
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MINISTÉRIOS ========== -->
+  <section id="ministerios" class="py-24 lg:py-32 bg-neutral-50">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="text-center mb-20 reveal">
+        <span class="text-black/30 text-[12px] tracking-[0.3em] uppercase font-medium">Sirva com seus dons</span>
+        <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-4">Ministérios</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Louvor -->
+        <div class="hover-lift group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow reveal reveal-delay-1">
+          <div class="aspect-[16/10] overflow-hidden img-zoom relative">
+            <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=700&h=440&fit=crop&q=80" alt="Louvor" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+          </div>
+          <div class="p-7">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-heading text-xl font-bold">Ministério de Louvor</h3>
+            </div>
+            <p class="text-black/50 text-sm leading-relaxed">Condução do louvor e adoração nos cultos e eventos da igreja.</p>
+          </div>
+        </div>
+
+        <!-- Kids -->
+        <div class="hover-lift group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow reveal reveal-delay-2">
+          <div class="aspect-[16/10] overflow-hidden img-zoom relative">
+            <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=700&h=440&fit=crop&q=80" alt="Kids" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+          </div>
+          <div class="p-7">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-heading text-xl font-bold">Ministério Kids</h3>
+            </div>
+            <p class="text-black/50 text-sm leading-relaxed">Programação especial com ensino bíblico adequado à faixa etária, aos domingos junto ao culto de celebração.</p>
+          </div>
+        </div>
+
+        <!-- IBN Teens -->
+        <div class="hover-lift group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow reveal reveal-delay-3">
+          <div class="aspect-[16/10] overflow-hidden img-zoom relative">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=700&h=440&fit=crop&q=80" alt="IBN Teens" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+          </div>
+          <div class="p-7">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-heading text-xl font-bold">IBN Teens</h3>
+            </div>
+            <p class="text-black/50 text-sm leading-relaxed">Ministério voltado para adolescentes e jovens com encontros todo sábado às 19h.</p>
+          </div>
+        </div>
+
+        <!-- Casais -->
+        <div class="hover-lift group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow reveal reveal-delay-1">
+          <div class="aspect-[16/10] overflow-hidden img-zoom relative">
+            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=700&h=440&fit=crop&q=80" alt="Casais" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+          </div>
+          <div class="p-7">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-heading text-xl font-bold">Ministério de Casais</h3>
+            </div>
+            <p class="text-black/50 text-sm leading-relaxed">Eventos, cursos e encontros voltados para o fortalecimento dos casamentos e da vida conjugal.</p>
+          </div>
+        </div>
+
+        <!-- Pequenos Grupos -->
+        <div class="hover-lift group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow reveal reveal-delay-2">
+          <div class="aspect-[16/10] overflow-hidden img-zoom relative">
+            <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=700&h=440&fit=crop&q=80" alt="Pequenos Grupos" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+          </div>
+          <div class="p-7">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-heading text-xl font-bold">Pequenos Grupos</h3>
+            </div>
+            <p class="text-black/50 text-sm leading-relaxed">Encontros semanais nas casas em diversos bairros de Juara. Estudo bíblico, oração e comunhão.</p>
+          </div>
+        </div>
+
+        <!-- Acolher -->
+        <div class="hover-lift group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow reveal reveal-delay-3">
+          <div class="aspect-[16/10] overflow-hidden img-zoom relative">
+            <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=700&h=440&fit=crop&q=80" alt="Acolher" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+          </div>
+          <div class="p-7">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-heading text-xl font-bold">Ministério Acolher</h3>
+            </div>
+            <p class="text-black/50 text-sm leading-relaxed">Recepção e acolhimento de visitantes e membros, garantindo que todos se sintam em casa.</p>
+          </div>
+        </div>
+
+        <!-- Ação Social -->
+        <div class="hover-lift group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow reveal reveal-delay-1">
+          <div class="aspect-[16/10] overflow-hidden img-zoom relative">
+            <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=700&h=440&fit=crop&q=80" alt="Ação Social" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+          </div>
+          <div class="p-7">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-heading text-xl font-bold">Ação Social</h3>
+            </div>
+            <p class="text-black/50 text-sm leading-relaxed">Projetos de assistência e apoio à comunidade de Juara, levando o amor de Cristo na prática.</p>
+          </div>
+        </div>
+
+        <!-- Intercessão -->
+        <div class="hover-lift group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow reveal reveal-delay-2">
+          <div class="aspect-[16/10] overflow-hidden img-zoom relative">
+            <img src="https://images.unsplash.com/photo-1445445290350-18a3b86e0b5a?w=700&h=440&fit=crop&q=80" alt="Intercessão" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+          </div>
+          <div class="p-7">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-heading text-xl font-bold">Intercessão</h3>
+            </div>
+            <p class="text-black/50 text-sm leading-relaxed">Grupo dedicado à oração pela igreja, pelos membros e pela comunidade de Juara.</p>
+          </div>
+        </div>
+
+        <!-- Base da Adoração -->
+        <div class="hover-lift group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow reveal reveal-delay-3">
+          <div class="aspect-[16/10] overflow-hidden img-zoom relative">
+            <img src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=700&h=440&fit=crop&q=80" alt="Base da Adoração" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+          </div>
+          <div class="p-7">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-heading text-xl font-bold">Base da Adoração</h3>
+            </div>
+            <p class="text-black/50 text-sm leading-relaxed">Escola de adoração da IBN Juara para formação e capacitação na área de louvor e adoração.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PASTOR ========== -->
+  <section class="py-24 lg:py-32 bg-white">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center max-w-5xl mx-auto">
+        <div class="reveal">
+          <div class="aspect-[3/4] rounded-3xl overflow-hidden img-zoom">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&h=800&fit=crop&q=80" alt="Pr. Ronael Silva" class="w-full h-full object-cover">
+          </div>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-[2px] bg-black/30"></div>
+            <span class="text-black/40 text-[12px] tracking-[0.3em] uppercase font-medium">Liderança</span>
+          </div>
+          <h2 class="font-heading text-3xl sm:text-4xl font-bold tracking-tight leading-[1.05]">
+            Nosso <span class="text-outline" style="-webkit-text-stroke-color: black;">pastor</span>
+          </h2>
+          <h3 class="font-heading text-xl font-bold mt-6">Pr. Ronael Silva</h3>
+          <span class="text-black/30 text-[11px] tracking-[0.3em] uppercase font-medium mt-1 block">Pastor da IBN Juara</span>
+          <p class="text-black/50 text-base leading-relaxed mt-6">
+            À frente da IBN Juara, o Pr. Ronael Silva conduz a igreja com dedicação,
+            amor pela Palavra de Deus e compromisso com o crescimento espiritual de cada membro.
+          </p>
+          <p class="text-black/50 text-base leading-relaxed mt-4">
+            Disponível para aconselhamento pastoral, aberto tanto para membros quanto
+            para visitantes. Um pastor presente e acessível à comunidade.
+          </p>
+          <a href="#contato" class="inline-flex items-center gap-3 mt-8 text-sm font-semibold tracking-wider uppercase group">
+            Agende um aconselhamento
+            <svg class="w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GALERIA ========== -->
+  <section class="py-24 lg:py-32 bg-white">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="text-center mb-16 reveal">
+        <span class="text-black/30 text-[12px] tracking-[0.3em] uppercase font-medium">Momentos</span>
+        <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-4">Galeria</h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4">
+        <div class="aspect-square rounded-xl overflow-hidden img-zoom reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1499652848871-1527a310b13a?w=600&h=600&fit=crop&q=80" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="aspect-square rounded-xl overflow-hidden img-zoom md:col-span-2 md:row-span-2 reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1478147427282-58a87a120781?w=900&h=900&fit=crop&q=80" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="aspect-square rounded-xl overflow-hidden img-zoom reveal reveal-delay-3">
+          <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=600&h=600&fit=crop&q=80" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="aspect-square rounded-xl overflow-hidden img-zoom reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=600&h=600&fit=crop&q=80" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="aspect-square rounded-xl overflow-hidden img-zoom reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1544427920-c49ccfb85579?w=600&h=600&fit=crop&q=80" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="aspect-square rounded-xl overflow-hidden img-zoom reveal reveal-delay-3">
+          <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?w=600&h=600&fit=crop&q=80" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="aspect-square rounded-xl overflow-hidden img-zoom reveal reveal-delay-4">
+          <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&h=600&fit=crop&q=80" alt="" class="w-full h-full object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="relative py-32 lg:py-40 bg-black text-white overflow-hidden grain">
+    <div class="absolute inset-0 opacity-20">
+      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&h=800&fit=crop&q=80" alt="" class="w-full h-full object-cover">
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <h2 class="font-heading text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-[0.95] reveal">
+        VENHA FAZER<br>PARTE DESSA<br>
+        <span class="text-outline">FAMÍLIA.</span>
+      </h2>
+      <p class="text-white/40 text-base max-w-lg mx-auto mt-8 reveal reveal-delay-1">
+        Aqui existe um lugar preparado para você. Venha viver os propósitos de Deus.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mt-12 reveal reveal-delay-2">
+        <a href="#contato" class="btn-modern border border-white text-white px-12 py-4 rounded-full text-sm font-semibold tracking-wider uppercase">
+          <span>Quero visitar</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTATO ========== -->
+  <section id="contato" class="py-24 lg:py-32 bg-white">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+        <!-- Form -->
+        <div class="reveal">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-[2px] bg-black/30"></div>
+            <span class="text-black/40 text-[12px] tracking-[0.3em] uppercase font-medium">Fale conosco</span>
+          </div>
+          <h2 class="font-heading text-3xl sm:text-4xl font-bold tracking-tight mb-10">Entre em contato</h2>
+
+          <form class="space-y-6" onsubmit="event.preventDefault(); var nome = this.querySelector('[name=nome]').value; var assunto = this.querySelector('[name=assunto]').value; var msg = this.querySelector('[name=msg]').value; var texto = 'Olá! Meu nome é ' + nome + '.%0A%0AAssunto: ' + assunto + '%0A%0A' + msg; window.open('https://wa.me/5566999392514?text=' + texto, '_blank');">
+            <div>
+              <label class="text-[11px] tracking-[0.2em] uppercase font-medium text-black/40 mb-2 block">Nome</label>
+              <input type="text" name="nome" required class="w-full px-0 py-3 border-b-2 border-black/10 focus:border-black bg-transparent outline-none text-lg transition-colors" placeholder="Seu nome">
+            </div>
+            <div>
+              <label class="text-[11px] tracking-[0.2em] uppercase font-medium text-black/40 mb-2 block">Assunto</label>
+              <select name="assunto" class="w-full px-0 py-3 border-b-2 border-black/10 focus:border-black bg-transparent outline-none text-lg transition-colors text-black/60">
+                <option>Quero visitar a igreja</option>
+                <option>Pedido de oração</option>
+                <option>Participar de um ministério</option>
+                <option>Participar de um Pequeno Grupo</option>
+                <option>Curso Identidade / Batismo</option>
+                <option>Aconselhamento pastoral</option>
+                <option>Outro assunto</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[11px] tracking-[0.2em] uppercase font-medium text-black/40 mb-2 block">Mensagem</label>
+              <textarea rows="4" name="msg" required class="w-full px-0 py-3 border-b-2 border-black/10 focus:border-black bg-transparent outline-none text-lg transition-colors resize-none" placeholder="Escreva sua mensagem..."></textarea>
+            </div>
+            <button type="submit" class="btn-dark bg-black text-white w-full py-5 rounded-full font-semibold text-sm tracking-wider uppercase transition-all hover:bg-black/80 flex items-center justify-center gap-3">
+              <span class="flex items-center gap-3">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Enviar pelo WhatsApp
+              </span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Info -->
+        <div class="reveal reveal-delay-2">
+          <div class="bg-black text-white rounded-3xl p-10 lg:p-14">
+            <h3 class="font-heading text-3xl font-bold mb-10">Informações</h3>
+
+            <div class="space-y-8">
+              <div class="flex items-start gap-5">
+                <div class="w-12 h-12 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm tracking-wider uppercase text-white/50">Endereço</h4>
+                  <p class="text-white/80 mt-2 text-lg">Rua Aracaju, 657N — Centro<br>Juara — MT</p>
+                </div>
+              </div>
+
+              <div class="w-full h-[1px] bg-white/10"></div>
+
+              <div class="flex items-start gap-5">
+                <div class="w-12 h-12 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm tracking-wider uppercase text-white/50">E-mail</h4>
+                  <p class="text-white/80 mt-2 text-lg">ibnjuaramt@gmail.com</p>
+                </div>
+              </div>
+
+              <div class="w-full h-[1px] bg-white/10"></div>
+
+              <div class="flex items-start gap-5">
+                <div class="w-12 h-12 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm tracking-wider uppercase text-white/50">Site</h4>
+                  <p class="text-white/80 mt-2 text-lg">www.ibnjuara.com.br</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social -->
+            <div class="flex gap-3 mt-12">
+              <a href="https://instagram.com/ibnjuaramt" target="_blank" class="w-11 h-11 border border-white/10 hover:bg-white hover:text-black rounded-lg flex items-center justify-center transition-all duration-300 text-white/40">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="https://facebook.com/ibnjuaramt" target="_blank" class="w-11 h-11 border border-white/10 hover:bg-white hover:text-black rounded-lg flex items-center justify-center transition-all duration-300 text-white/40">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="https://youtube.com/@ibnjuaramt" target="_blank" class="w-11 h-11 border border-white/10 hover:bg-white hover:text-black rounded-lg flex items-center justify-center transition-all duration-300 text-white/40">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Map placeholder -->
+          <div class="rounded-2xl overflow-hidden mt-8 aspect-video relative img-zoom">
+            <img src="assets/Juara.png" alt="Localização IBN Juara" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <a href="https://share.google/n0rbAgOqFQCTW45hm" target="_blank" class="bg-white text-black px-8 py-3.5 rounded-full font-semibold text-sm tracking-wider uppercase hover:bg-black hover:text-white transition-all duration-300 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+                Ver no Maps
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-black text-white border-t border-white/5">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-20">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <!-- Brand -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 border border-white/20 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M11 2v4H9v2h2v3H7v2h4v9h2v-9h4v-2h-4V8h2V6h-2V2h-2z"/>
+              </svg>
+            </div>
+            <span class="font-heading font-bold text-xl tracking-tight">IBN JUARA</span>
+          </div>
+          <p class="text-white/30 leading-relaxed max-w-md text-sm">
+            Igreja cristocêntrica, firmada na Palavra e comprometida com o evangelho de Jesus Cristo.
+            Afiliada à Convenção Batista Nacional (CBN).
+          </p>
+        </div>
+
+        <!-- Links -->
+        <div>
+          <h4 class="text-[11px] tracking-[0.3em] uppercase font-medium text-white/30 mb-6">Navegação</h4>
+          <ul class="space-y-3">
+            <li><a href="#inicio" class="text-white/50 hover:text-white text-sm transition-colors">Início</a></li>
+            <li><a href="#sobre" class="text-white/50 hover:text-white text-sm transition-colors">Sobre</a></li>
+            <li><a href="#cultos" class="text-white/50 hover:text-white text-sm transition-colors">Cultos</a></li>
+            <li><a href="#ministerios" class="text-white/50 hover:text-white text-sm transition-colors">Ministérios</a></li>
+            <li><a href="#contato" class="text-white/50 hover:text-white text-sm transition-colors">Contato</a></li>
+          </ul>
+        </div>
+
+        <!-- Schedule -->
+        <div>
+          <h4 class="text-[11px] tracking-[0.3em] uppercase font-medium text-white/30 mb-6">Horários</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex justify-between"><span class="text-white/40">Domingo</span><span class="text-white/70 font-medium">18:30</span></li>
+            <li class="flex justify-between"><span class="text-white/40">Terça</span><span class="text-white/70 font-medium">19:30</span></li>
+            <li class="flex justify-between"><span class="text-white/40">Quinta (PGs)</span><span class="text-white/70 font-medium">19:30</span></li>
+            <li class="flex justify-between"><span class="text-white/40">Sábado (Teens)</span><span class="text-white/70 font-medium">19h</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/5">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-white/20 text-xs tracking-wider">&copy; 2026 IBN Juara. Todos os direitos reservados.</p>
+        <p class="text-white/20 text-xs tracking-wider">Igreja Batista Nacional de Juara — MT</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 w-12 h-12 bg-black text-white border border-white/10 rounded-full shadow-2xl flex items-center justify-center transition-all duration-500 opacity-0 translate-y-4 z-40 hover:bg-white hover:text-black">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+  </button>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    const btt = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        navbar.classList.add('nav-blur', 'bg-black/80');
+      } else {
+        navbar.classList.remove('nav-blur', 'bg-black/80');
+      }
+      if (window.scrollY > 500) {
+        btt.style.opacity = '1';
+        btt.style.transform = 'translateY(0)';
+      } else {
+        btt.style.opacity = '0';
+        btt.style.transform = 'translateY(1rem)';
+      }
+    });
+
+    // Mobile menu
+    function toggleMenu() {
+      document.getElementById('mobileOverlay').classList.toggle('open');
+      document.getElementById('mobilePanel').classList.toggle('open');
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) {
+          window.scrollTo({ top: t.offsetTop - 80, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Reveal on scroll
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal, .line-grow').forEach(el => revealObserver.observe(el));
+
+    // Counter animation
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.target);
+          const duration = 2000;
+          const start = performance.now();
+
+          function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target);
+            if (progress < 1) requestAnimationFrame(update);
+          }
+          requestAnimationFrame(update);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+  </script>
+</body>
+</html>
