@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Página não encontrada | IBN Juara</title>
+  <link rel="icon" type="image/png" href="/assets/logo-ibn-juara.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; }
+    body {
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .container { max-width: 500px; }
+    .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+    }
+    .code {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(5rem, 15vw, 10rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      -webkit-text-stroke: 2px white;
+      color: transparent;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.15s forwards;
+    }
+    .message {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 1.5rem;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.3s forwards;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+      padding: 1rem 2.5rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.45s forwards;
+    }
+    .btn:hover {
+      background: #fff;
+      color: #000;
+    }
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="/assets/logo-ibn-juara.png" alt="IBN Juara" class="logo">
+    <h1 class="code">404</h1>
+    <p class="message">Essa página não foi encontrada.<br>Mas a porta da IBN Juara está sempre aberta.</p>
+    <a href="/" class="btn">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+      Voltar ao início
+    </a>
+  </div>
+</body>
+</html>

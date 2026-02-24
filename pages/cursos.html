@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursos | IBN Juara - Igreja Batista Nacional de Juara</title>
+  <meta name="description" content="Cursos e capacitações da Igreja Batista Nacional de Juara. Cresça na Palavra e fortaleça sua fé.">
+  <link rel="icon" type="image/png" href="/assets/logo-ibn-juara.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Sora', 'sans-serif'],
+            body: ['Space Grotesk', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    * { font-family: 'Space Grotesk', sans-serif; }
+    html { scroll-behavior: smooth; overscroll-behavior: none; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+    .text-outline {
+      -webkit-text-stroke: 1.5px white;
+      color: transparent;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .hover-lift {
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hover-lift:hover {
+      transform: translateY(-6px);
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/5">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="flex items-center justify-between h-20">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/assets/logo-ibn-juara.png" alt="IBN Juara" class="h-12 w-12 rounded-full object-cover">
+          <span class="font-heading font-bold text-lg tracking-tight text-white">IBN JUARA</span>
+        </a>
+        <a href="/" class="text-white hover:text-white text-sm font-medium tracking-wider uppercase transition-colors flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          Voltar
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-32 pb-20 lg:pt-40 lg:pb-28">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="max-w-3xl reveal">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-[2px] bg-white/30"></div>
+          <span class="text-white/80 text-[12px] tracking-[0.3em] uppercase font-medium">Capacitação</span>
+        </div>
+        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[0.95]">
+          Nossos <span class="text-outline">Cursos</span>
+        </h1>
+        <p class="text-white text-base leading-relaxed mt-6 max-w-xl">
+          Cresça no conhecimento da Palavra e fortaleça sua caminhada com Deus através dos nossos cursos e capacitações.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cursos Grid -->
+  <section class="pb-24 lg:pb-32">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cursos-grid">
+
+        <!-- Curso Identidade -->
+        <div class="border border-white/10 rounded-2xl overflow-hidden hover-lift reveal">
+          <div class="p-8">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-12 h-12 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+              </div>
+              <span class="text-white/80 text-[11px] tracking-[0.3em] uppercase font-medium">Formação</span>
+            </div>
+            <h3 class="font-heading text-2xl font-bold">Identidade</h3>
+            <p class="text-white/80 text-sm leading-relaxed mt-4">
+              Descubra quem você é em Cristo. Este curso trabalha os fundamentos da identidade cristã,
+              ajudando você a compreender seu valor, propósito e chamado diante de Deus.
+              Um mergulho profundo no que a Bíblia diz sobre quem somos.
+            </p>
+            <div class="mt-6 pt-6 border-t border-white/5 flex items-center gap-4">
+              <span class="text-white/70 text-xs tracking-wider uppercase">Fundamentos da fé</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Curso de Intercessão -->
+        <div class="border border-white/10 rounded-2xl overflow-hidden hover-lift reveal reveal-delay-1">
+          <div class="p-8">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-12 h-12 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+              </div>
+              <span class="text-white/80 text-[11px] tracking-[0.3em] uppercase font-medium">Oração</span>
+            </div>
+            <h3 class="font-heading text-2xl font-bold">Intercessão</h3>
+            <p class="text-white/80 text-sm leading-relaxed mt-4">
+              Aprenda a orar com poder e propósito. O curso de Intercessão capacita você
+              a desenvolver uma vida de oração mais profunda, entendendo os princípios bíblicos
+              da intercessão e como se posicionar em favor de outros diante do trono de Deus.
+            </p>
+            <div class="mt-6 pt-6 border-t border-white/5 flex items-center gap-4">
+              <span class="text-white/70 text-xs tracking-wider uppercase">Vida de oração</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Escola de Adoração -->
+        <div class="border border-white/10 rounded-2xl overflow-hidden hover-lift reveal reveal-delay-2">
+          <div class="p-8">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-12 h-12 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.34A1.154 1.154 0 0017.58 1.2l-3.467.99A2.25 2.25 0 0012.48 4.35v7.59"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.5 15.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 007.5 12v-1.5"/></svg>
+              </div>
+              <span class="text-white/80 text-[11px] tracking-[0.3em] uppercase font-medium">Louvor</span>
+            </div>
+            <h3 class="font-heading text-2xl font-bold">Escola de Adoração</h3>
+            <p class="text-white/80 text-sm leading-relaxed mt-4">
+              Mais do que cantar, adorar é um estilo de vida. A Escola de Adoração prepara
+              adoradores que entendem o coração de Deus, desenvolvendo habilidades musicais
+              e espirituais para servir com excelência no ministério de louvor.
+            </p>
+            <div class="mt-6 pt-6 border-t border-white/5 flex items-center gap-4">
+              <span class="text-white/70 text-xs tracking-wider uppercase">Ministério de louvor</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mulher Única -->
+        <div class="border border-white/10 rounded-2xl overflow-hidden hover-lift reveal">
+          <div class="p-8">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-12 h-12 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg>
+              </div>
+              <span class="text-white/80 text-[11px] tracking-[0.3em] uppercase font-medium">Mulheres</span>
+            </div>
+            <h3 class="font-heading text-2xl font-bold">Mulher Única</h3>
+            <p class="text-white/80 text-sm leading-relaxed mt-4">
+              Um curso voltado para mulheres que desejam fortalecer sua fé e descobrir
+              o propósito de Deus para suas vidas. Aborda temas como autoestima,
+              relacionamentos, chamado e o papel da mulher no Reino de Deus.
+            </p>
+            <div class="mt-6 pt-6 border-t border-white/5 flex items-center gap-4">
+              <span class="text-white/70 text-xs tracking-wider uppercase">Ministério feminino</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Homens ao Máximo -->
+        <div class="border border-white/10 rounded-2xl overflow-hidden hover-lift reveal reveal-delay-1">
+          <div class="p-8">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-12 h-12 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+              </div>
+              <span class="text-white/80 text-[11px] tracking-[0.3em] uppercase font-medium">Homens</span>
+            </div>
+            <h3 class="font-heading text-2xl font-bold">Homens ao Máximo</h3>
+            <p class="text-white/80 text-sm leading-relaxed mt-4">
+              Curso direcionado para homens que querem viver no máximo do propósito de Deus.
+              Aborda liderança, paternidade, integridade e o chamado do homem segundo
+              o coração de Deus. Seja o homem que Deus projetou você para ser.
+            </p>
+            <div class="mt-6 pt-6 border-t border-white/5 flex items-center gap-4">
+              <span class="text-white/70 text-xs tracking-wider uppercase">Ministério masculino</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-8">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-white text-xs tracking-wider">&copy; 2026 IBN Juara. Todos os direitos reservados.</p>
+      <p class="text-white text-xs tracking-wider">Feito com ❤️ — <a href="https://agpixel.com.br" target="_blank" class="underline hover:text-white/70 transition-colors">Pixel</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>
